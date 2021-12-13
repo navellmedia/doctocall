@@ -1,3 +1,4 @@
+import 'package:doctorcall/coreapp/routing/routes.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -11,8 +12,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("OKE"),),
       body: Center(
-        child: Text("Oke"),
+        child: IconButton(icon: Icon(Icons.save),
+          onPressed: (){
+          Navigator.pushNamed(context, Routes.DOCTOR, arguments: "dr. Anne");
+          },
+        ),
       ),
     );
   }

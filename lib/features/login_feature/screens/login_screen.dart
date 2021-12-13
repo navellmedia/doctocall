@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: ListView(
         children: [
           RaisedButton(onPressed: (){
-            Navigator.pushNamed(context, Routes.MAIN);
+            Navigator.pushReplacementNamed(context, Routes.MAIN);
           }, child: Text("go to main screnn"),)
         ],
       )
