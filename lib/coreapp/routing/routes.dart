@@ -8,4 +8,5 @@ class Routes {
   static const MESSAGE = "/message";
   static const PROFILE = "/profile";
   static const DOCTOR = "/doctor";
+  static const ONBOARDING = "/onboarding";
 }

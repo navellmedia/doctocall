@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 5),() => Navigator.restorablePushReplacementNamed(context, Routes.LOGIN));
+    Timer(Duration(seconds: 5),() => Navigator.restorablePushReplacementNamed(context, Routes.ONBOARDING));
     super.initState();
   }
 
