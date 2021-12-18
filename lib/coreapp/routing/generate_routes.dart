@@ -1,3 +1,4 @@
+import 'package:doctorcall/features/boarding_feature/screens/boarding_feature.dart';
 import 'package:doctorcall/features/doctor_feature/screens/doctor_screen.dart';
 import 'package:doctorcall/features/login_feature/screens/login_screen.dart';
 import 'package:doctorcall/features/main_page_feature/screens/main_screen.dart';
@@ -11,6 +12,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.ROOT:
       return MaterialPageRoute(builder: (context) => SplashScreen());
+    case Routes.ONBOARDING:
+      return MaterialPageRoute(builder: (context) => BoardingFeature());
     case Routes.LOGIN:
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case Routes.REGISTER:

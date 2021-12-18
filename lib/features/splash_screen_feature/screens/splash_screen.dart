@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:doctorcall/coreapp/constants/color_pallete.dart';
 import 'package:doctorcall/coreapp/routing/routes.dart';
+import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,8 +15,20 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 5),() => Navigator.restorablePushReplacementNamed(context, Routes.ONBOARDING));
+    checkLogin();
     super.initState();
+  }
+
+  void checkLogin() async {
+    Timer(Duration(seconds: 3), () async {
+      if (await SessionManagement.chekIslogin()) {
+        Navigator.restorablePushReplacementNamed(context, Routes.MAIN);
+      } else if(await SessionManagement.isFirstTime()) {
+        Navigator.restorablePushReplacementNamed(context, Routes.ONBOARDING);
+      }else{
+        Navigator.restorablePushReplacementNamed(context, Routes.LOGIN);
+      }
+    });
   }
 
   @override

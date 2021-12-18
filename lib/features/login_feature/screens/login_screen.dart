@@ -1,10 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:doctorcall/coreapp/routing/routes.dart';
+import 'package:doctorcall/coreapp/service/session_management.dart';
+import 'package:doctorcall/features/login_feature/models/login_request.dart';
 import 'package:doctorcall/features/login_feature/models/login_response.dart';
 import 'package:doctorcall/features/login_feature/models/news_respose.dart';
+import 'package:doctorcall/features/login_feature/repositories/login_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,9 +20,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  SharedPreferences? _prefs;
+
   String? token;
+  bool isLoading = false;
+  String _username ="";
+  String _password = "";
+
 
   login() async {
+    setState(() {
+      isLoading = true;
+    });
     var client = http.Client();
     var url = Uri.https('presline-api.navel.id', '/api/login');
     var res = await client.post(url,
@@ -37,6 +52,20 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("login failed error code : ${res.statusCode}");
     }
+    isLoading = false;
+  }
+
+  //"inte@gmail.com"
+  //"123456780000"
+
+  void dioLogin() async {
+    var param = LogiRequest(email: _username, password: _password);
+    var data = await LoginRepository.getLoginDataHttp(param);
+
+    if(data!.success!){
+      SessionManagement.setLogin(data!.token!);
+      Navigator.pushReplacementNamed(context, Routes.MAIN);
+    }
   }
 
   void getNews() async {
@@ -55,6 +84,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    initPref();
+    super.initState();
+  }
+
+  initPref() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -62,18 +101,47 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         body: ListView(
           children: [
-            RaisedButton(
-              onPressed: () {
-                //Navigator.pushReplacementNamed(context, Routes.MAIN);
-                login();
+           SizedBox(height: 100,),
+            TextField(
+              onChanged: (val){
+                _username =  val;
               },
-              child: Text("go to main screnn"),
+              decoration: InputDecoration(
+                icon: Icon(Icons.supervisor_account),
+                hintText: "Username/email",
+                border: InputBorder.none
+              ),
             ),
+            TextField(
+              onChanged: (val){
+                _password =  val;
+              },
+              decoration: InputDecoration(
+                  icon: Icon(Icons.lock),
+                  hintText: "Password",
+                  border: InputBorder.none
+              ),
+            ),
+            isLoading
+                ? Container()
+                : RaisedButton(
+                    onPressed: () {
+                      //Navigator.pushReplacementNamed(context, Routes.MAIN);
+                      login();
+                    },
+                    child: Text("Login"),
+                  ),
             RaisedButton(
               onPressed: () {
                 getNews();
               },
               child: Text("Get News"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                dioLogin();
+              },
+              child: Text("Get Dio Login"),
             )
           ],
         ));

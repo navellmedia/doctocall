@@ -1,4 +1,5 @@
 import 'package:doctorcall/coreapp/routing/routes.dart';
+import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -14,11 +15,21 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(title: Text("OKE"),),
       body: Center(
-        child: IconButton(icon: Icon(Icons.save),
-          onPressed: (){
-          Navigator.pushNamed(context, Routes.DOCTOR, arguments: "dr. Anne");
-          },
-        ),
+        child: Column(
+          children: [
+            IconButton(icon: Icon(Icons.save),
+              onPressed: (){
+                Navigator.pushNamed(context, Routes.DOCTOR, arguments: "dr. Anne");
+              },
+            ),
+            IconButton(icon: Icon(Icons.lock),
+              onPressed: () async {
+                await SessionManagement.setLogout();
+                Navigator.pushNamed(context, Routes.LOGIN);
+              },
+            ),
+          ],
+        )
       ),
     );
   }
