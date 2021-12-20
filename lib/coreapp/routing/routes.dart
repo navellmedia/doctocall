@@ -9,4 +9,5 @@ class Routes {
   static const PROFILE = "/profile";
   static const DOCTOR = "/doctor";
   static const ONBOARDING = "/onboarding";
+  static const NEWS_DETAIL = "/news_detail";
 }

@@ -58,12 +58,19 @@ class _LoginScreenState extends State<LoginScreen> {
   //"inte@gmail.com"
   //"123456780000"
 
-  void dioLogin() async {
+  void dioLogin(BuildContext context) async {
     var param = LogiRequest(email: _username, password: _password);
     var data = await LoginRepository.getLoginDataHttp(param);
 
-    if(data!.success!){
+    print(data.toString());
+    bool isSuccess = data?.success??false;
+    if(!isSuccess){
+      final snackBar = SnackBar(content: Text(data?.message??"Error while login"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }else{
       SessionManagement.setLogin(data!.token!);
+      LoginRepository.setUserData();
       Navigator.pushReplacementNamed(context, Routes.MAIN);
     }
   }
@@ -139,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RaisedButton(
               onPressed: () {
-                dioLogin();
+                dioLogin(context);
               },
               child: Text("Get Dio Login"),
             )
