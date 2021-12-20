@@ -3,6 +3,7 @@ import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:doctorcall/features/home_feature/screens/home_screen.dart';
 import 'package:doctorcall/features/login_feature/models/user_response.dart';
 import 'package:doctorcall/features/news_feature/screens/news_page.dart';
+import 'package:doctorcall/features/profile_feature/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     NewsPage(),
     NewsPage(),
-    NewsPage(),
+    ProfileScreen(),
   ];
 
   _onTap (int index){
