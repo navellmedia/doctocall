@@ -1,5 +1,6 @@
 import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:doctorcall/features/home_feature/bloc/home_bloc.dart';
+import 'package:doctorcall/features/home_feature/models/population_response.dart';
 import 'package:doctorcall/features/login_feature/models/user_response.dart';
 import 'package:doctorcall/features/news_feature/models/news_response.dart';
 import 'package:flutter/material.dart';
@@ -68,12 +69,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (state is HomeSucces) {
                 List<Datum> data = state.data!;
+                List<DataPopulation> population = state.population!;
+
                 return ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (ctx, index) {
                       return Card(
                         child: ListTile(
-                          title: Text(data[index].title!),
+                          title: Text("${data[index].body!}"),
                           subtitle: Image.network(data[index].imgUrl!),
                         ),
                       );

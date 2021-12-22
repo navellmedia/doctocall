@@ -7,4 +7,3 @@ abstract class HomeEvent extends Equatable{
 }
 
 class GetDataNews extends HomeEvent{}
-

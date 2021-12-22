@@ -1,3 +1,4 @@
+import 'package:doctorcall/features/home_feature/models/population_response.dart';
 import 'package:doctorcall/features/home_feature/repositories/home_repository.dart';
 import 'package:doctorcall/features/news_feature/repositories/news_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -17,7 +18,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is GetDataNews) {
       try {
         var _data = await HomeRepository.getNewsData();
-        emit(HomeSucces(data: _data?.data));
+        var _pupulation =  await HomeRepository.getPopulation();
+        emit(HomeSucces(data: _data?.data, population: _pupulation?.dataPopulation));
+
       } catch (e) {
         emit(HomeError(message: "Gagal mengambil data"));
       }

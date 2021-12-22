@@ -12,7 +12,9 @@ class HomeLoading extends HomeState{}
 
 class HomeSucces extends HomeState{
   List<Datum>? data;
-  HomeSucces({this.data});
+  List<DataPopulation>? population;
+
+  HomeSucces({this.data,this.population});
 }
 
 class HomeError extends HomeState{
