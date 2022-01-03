@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'notofication_model.dart';
+
 // create/insert, update, delete, read
 class DBProvider {
   DBProvider._();
@@ -40,7 +41,8 @@ class DBProvider {
   insertData(NotificationModel notif) async {
     final db = await database;
 
-    var raw = await db.rawInsert(""''
+    var raw = await db.rawInsert(""
+        ''
         "INSERT INTO Notification (id,subject,body,isread)"
         " VALUES ('${notif.id}', '${notif.subject}','${notif.body}','${notif.isread}')");
 
@@ -49,7 +51,8 @@ class DBProvider {
 
   Future<List<NotificationModel>> getDataAll() async {
     final db = await database;
-    var res = await db.query("Notification");//, where: "id=?", whereArgs: [1]);
+    var res =
+        await db.query("Notification"); //, where: "id=?", whereArgs: [1]);
 
     List<NotificationModel> list = res.isEmpty
         ? []
@@ -57,8 +60,24 @@ class DBProvider {
     return list;
   }
 
-  deleteById(int id) async{
+  Future<List<NotificationModel>> getDataById(int id) async {
+    final db = await database;
+    var res = await db.query("Notification", where: "id=?", whereArgs: [id]);
+
+    List<NotificationModel> list = res.isEmpty
+        ? []
+        : res.map((e) => NotificationModel.fromJson(e)).toList();
+    return list;
+  }
+
+  deleteById(int id) async {
     final db = await database;
     return db.delete("Notification", where: "id=?", whereArgs: [id]);
+  }
+
+  updateById(NotificationModel notif) async {
+    final db = await database;
+    var res = await db.update("Notification", notif.toJson(),
+        where: "id=?", whereArgs: [notif.id]);
   }
 }
