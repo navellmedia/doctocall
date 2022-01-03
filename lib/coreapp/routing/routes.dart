@@ -10,4 +10,6 @@ class Routes {
   static const DOCTOR = "/doctor";
   static const ONBOARDING = "/onboarding";
   static const NEWS_DETAIL = "/news_detail";
+  static const ADD_NOTIF_DATA = "/add_notif_data";
+
 }
