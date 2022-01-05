@@ -6,6 +6,7 @@ import 'coreapp/routing/routes.dart';
 import 'features/home_feature/bloc/home_bloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

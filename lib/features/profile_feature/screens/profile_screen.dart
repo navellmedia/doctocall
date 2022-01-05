@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:doctorcall/coreapp/routing/routes.dart';
 import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:doctorcall/features/login_feature/models/user_response.dart';
+import 'package:doctorcall/features/profile_feature/screens/takepicture_screens.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -10,20 +12,12 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>{
   UserResponse? _userResponse;
 
   @override
   void initState() {
     super.initState();
-    getUserSession();
-  }
-
-  void getUserSession() async {
-    var data = await SessionManagement.getUserData();
-    setState(() {
-      _userResponse = data;
-    });
   }
 
   @override
@@ -35,10 +29,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                      "https://www.achievers.com/blog/wp-content/uploads/2020/05/05-27-20.jpg"),
+                InkWell(
+                  onTap: (){
+                    //if(cameraDescription!=null){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TakepictureScreen(),
+                        ),
+                      );
+                    //}
+                  },
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                        "https://www.achievers.com/blog/wp-content/uploads/2020/05/05-27-20.jpg"),
+                  ),
                 ),
                 SizedBox(
                   width: 16,
@@ -75,15 +80,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ))
               ],
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Divider(),
             ListTile(
               title: Text("Nama"),
-              subtitle: Text(_userResponse?.data!.name??""),
+              subtitle: Text(_userResponse?.data!.name ?? ""),
             ),
             ListTile(
               title: Text("Email"),
-              subtitle: Text(_userResponse?.data!.email??""),
+              subtitle: Text(_userResponse?.data!.email ?? ""),
             ),
             RaisedButton(
               color: Colors.orangeAccent,

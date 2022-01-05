@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (state is HomeSucces) {
                 List<Datum> data = state.data!;
-                List<DataPopulation> population = state.population!;
+                List<DataPopulation>? population = state.population;
 
                 return ListView.builder(
                     itemCount: data.length,
