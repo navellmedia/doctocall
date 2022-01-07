@@ -1,11 +1,13 @@
 import 'package:doctorcall/features/boarding_feature/screens/boarding_feature.dart';
 import 'package:doctorcall/features/doctor_feature/screens/doctor_screen.dart';
+import 'package:doctorcall/features/location_feature/screens/location_screens.dart';
 import 'package:doctorcall/features/login_feature/screens/login_screen.dart';
 import 'package:doctorcall/features/main_page_feature/screens/main_screen.dart';
 import 'package:doctorcall/features/news_feature/screens/news_detail_screen.dart';
 import 'package:doctorcall/features/notification_feature/screens/notification_add_screen.dart';
 import 'package:doctorcall/features/register_feature/screens/register_screen.dart';
 import 'package:doctorcall/features/splash_screen_feature/screens/splash_screen.dart';
+import 'package:doctorcall/features/tracking_feature/screens/tracking_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'routes.dart';
@@ -41,6 +43,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => NotificationAddScreen(
                 data: argData,
               ));
+
+    case Routes.LOCATION_SCREEN:
+      dynamic argData = settings.arguments;
+      return MaterialPageRoute(
+          builder: (context) => LocationScreen(
+            //data: argData,
+          ));
+    case Routes.TRACKING_SCREEN:
+      dynamic argData = settings.arguments;
+      return MaterialPageRoute(
+          builder: (context) => TrackingScreen(
+            //data: argData,
+          ));
 
     default:
       return MaterialPageRoute(builder: (context) => LoginScreen());

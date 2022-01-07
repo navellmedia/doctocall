@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../coreapp/routing/routes.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
 
               if (state is HomeSucces) {
-                List<Datum> data = state.data!;
+                List<Datum> data = state.data??[];
                 List<DataPopulation>? population = state.population;
 
                 return ListView.builder(
@@ -88,8 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
           )),
       floatingActionButton:
           FloatingActionButton(onPressed: () {
-            _homeBloc.add(GetDataNews());
-          }, child: Icon(Icons.save)),
+            //_homeBloc.add(GetDataNews());
+            Navigator.pushNamed(context, Routes.TRACKING_SCREEN);
+          }, child: Icon(Icons.map)),
     );
   }
 }

@@ -52,4 +52,15 @@ class SessionManagement{
     await pref.remove("isLogin");
     await pref.remove("token");
   }
+
+  static setImageProfile(String? img_profile) async {
+    SharedPreferences pref =  await SharedPreferences.getInstance();
+    await pref.setString("img_profile", img_profile!);
+  }
+
+  static Future<String> getImageProfile() async {
+    SharedPreferences pref =  await SharedPreferences.getInstance();
+    var img = await pref.getString("img_profile");
+    return img??"";
+  }
 }
