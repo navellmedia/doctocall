@@ -10,6 +10,8 @@ class LocationService {
   Stream<UserLocation> get locationStream => _locationStreamController.stream;
 
   LocationService() {
+    //location.enableBackgroundMode(enable: true);
+
     location.requestPermission().then((permitionStatus) {
       if (permitionStatus == PermissionStatus.granted) {
         location.onLocationChanged.listen((locationData) {
