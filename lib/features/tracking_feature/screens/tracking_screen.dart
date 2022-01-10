@@ -21,7 +21,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(-6.215148, 106.816101),
-    zoom: 14,
+    zoom: 16,
   );
 
   static final CameraPosition _kLake = CameraPosition(
@@ -44,7 +44,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   void updateLocation() async {
     CameraPosition cameraPosition = CameraPosition(
-        zoom: 16, tilt: 80, bearing: 30, target: LatLng(latitude, longitude));
+        //zoom: 16, tilt: 80, bearing: 30,
+        target: LatLng(latitude, longitude));
 
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
@@ -74,7 +75,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
         title: Text("Location Traking"),
       ),
       body: GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         markers: _markers,
         onMapCreated: (GoogleMapController controller) {
