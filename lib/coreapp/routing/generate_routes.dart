@@ -6,6 +6,7 @@ import 'package:doctorcall/features/main_page_feature/screens/main_screen.dart';
 import 'package:doctorcall/features/news_feature/screens/news_detail_screen.dart';
 import 'package:doctorcall/features/notification_feature/screens/notification_add_screen.dart';
 import 'package:doctorcall/features/register_feature/screens/register_screen.dart';
+import 'package:doctorcall/features/shownotif_feature/screen/shownotif_screen.dart';
 import 'package:doctorcall/features/splash_screen_feature/screens/splash_screen.dart';
 import 'package:doctorcall/features/tracking_feature/screens/tracking_screen.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => TrackingScreen(
             //data: argData,
           ));
+    case Routes.SHOWNOTIF_SCREEN:
+      dynamic argData = settings.arguments;
+      return MaterialPageRoute(
+          builder: (context) => ShownotifScreen(
+            //data: argData,
+          ));
+
 
     default:
       return MaterialPageRoute(builder: (context) => LoginScreen());

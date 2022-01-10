@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:doctorcall/coreapp/constants/color_pallete.dart';
 import 'package:doctorcall/coreapp/routing/routes.dart';
 import 'package:doctorcall/coreapp/service/session_management.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,6 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     checkLogin();
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? androidNotification = message.notification?.android;
+
+      if(notification!=null && androidNotification !=null){
+        Navigator.pushNamed(context, Routes.SHOWNOTIF_SCREEN);
+      }
+    });
+
     super.initState();
   }
 

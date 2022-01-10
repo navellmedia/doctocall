@@ -13,5 +13,5 @@ class Routes {
   static const ADD_NOTIF_DATA = "/add_notif_data";
   static const LOCATION_SCREEN = "/location_screen";
   static const TRACKING_SCREEN = "/traking_screen";
-
+  static const SHOWNOTIF_SCREEN = "/shownotif_screen";
 }
