@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if(await SessionManagement.isFirstTime()) {
         Navigator.restorablePushReplacementNamed(context, Routes.ONBOARDING);
       }else{
-        Navigator.restorablePushReplacementNamed(context, Routes.LOGIN);
+        Navigator.restorablePushReplacementNamed(context, Routes.FIREBASE_SCREEN);
       }
     });
   }

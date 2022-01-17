@@ -14,4 +14,5 @@ class Routes {
   static const LOCATION_SCREEN = "/location_screen";
   static const TRACKING_SCREEN = "/traking_screen";
   static const SHOWNOTIF_SCREEN = "/shownotif_screen";
+  static const FIREBASE_SCREEN = "/firebase_screen";
 }

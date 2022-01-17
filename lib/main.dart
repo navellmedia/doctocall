@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'coreapp/routing/generate_routes.dart';
 import 'coreapp/routing/routes.dart';
 import 'features/home_feature/bloc/home_bloc.dart';
+
+bool shouldUseFirestoreEmulator = false;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', //id,
@@ -44,7 +47,9 @@ Future<void> main() async {
   }
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  if (shouldUseFirestoreEmulator) {
+    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  }
   var _token = await FirebaseMessaging.instance.getToken();
   print("Client Token = $_token");
 

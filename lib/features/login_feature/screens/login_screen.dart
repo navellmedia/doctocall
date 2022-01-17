@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:doctorcall/coreapp/routing/routes.dart';
 import 'package:doctorcall/coreapp/service/session_management.dart';
 import 'package:doctorcall/features/login_feature/models/login_request.dart';
 import 'package:doctorcall/features/login_feature/models/login_response.dart';
 import 'package:doctorcall/features/login_feature/models/news_respose.dart';
+import 'package:doctorcall/features/login_feature/models/users.dart';
 import 'package:doctorcall/features/login_feature/repositories/login_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,12 +23,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   SharedPreferences? _prefs;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   String? token;
   bool isLoading = false;
-  String _username ="";
+  String _username = "";
   String _password = "";
-
 
   login() async {
     setState(() {
@@ -63,12 +65,13 @@ class _LoginScreenState extends State<LoginScreen> {
     var data = await LoginRepository.getLoginDataHttp(param);
 
     print(data.toString());
-    bool isSuccess = data?.success??false;
-    if(!isSuccess){
-      final snackBar = SnackBar(content: Text(data?.message??"Error while login"));
+    bool isSuccess = data?.success ?? false;
+    if (!isSuccess) {
+      final snackBar =
+          SnackBar(content: Text(data?.message ?? "Error while login"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
-    }else{
+    } else {
       SessionManagement.setLogin(data!.token!);
       LoginRepository.setUserData();
       Navigator.pushReplacementNamed(context, Routes.MAIN);
@@ -108,25 +111,37 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         body: ListView(
           children: [
-           SizedBox(height: 100,),
-            TextField(
-              onChanged: (val){
-                _username =  val;
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.supervisor_account),
-                hintText: "Username/email",
-                border: InputBorder.none
-              ),
+            SizedBox(
+              height: 100,
             ),
             TextField(
-              onChanged: (val){
-                _password =  val;
+              onChanged: (val) {
+                _username = val;
+              },
+              decoration: InputDecoration(
+                  icon: Icon(Icons.supervisor_account),
+                  hintText: "Username/email",
+                  border: InputBorder.none),
+            ),
+            TextField(
+              onChanged: (val) {
+                _password = val;
               },
               decoration: InputDecoration(
                   icon: Icon(Icons.lock),
                   hintText: "Password",
-                  border: InputBorder.none
+                  border: InputBorder.none),
+            ),
+            TextButton(
+              onPressed: addUser,
+              child: Text(
+                "Add User",
+              ),
+            ),
+            TextButton(
+              onPressed: getData,
+              child: Text(
+                "Get data",
               ),
             ),
             isLoading
@@ -153,4 +168,29 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ));
   }
+
+  Future<void> addUser() async {
+    // Call the user's CollectionReference to add a new user
+    return users
+        .add({
+          'full_name': "Jacki Chan", // John Doe
+          'company': "MD", // Stokes and Sons
+          'age': 26 // 42
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> getData() async {
+    QuerySnapshot result = await users.get();
+
+    List<Users> iList = [];
+    result.docs.forEach((element) {
+      var a = element as DocumentSnapshot<Map<String,dynamic>>;
+      print(a.data());
+      var user = Users.fromDocumentSnapshot(doc: element as DocumentSnapshot<Map<String,dynamic>>);
+      iList.add(user);
+    });
+  }
+
 }

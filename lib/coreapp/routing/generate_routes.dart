@@ -1,5 +1,6 @@
 import 'package:doctorcall/features/boarding_feature/screens/boarding_feature.dart';
 import 'package:doctorcall/features/doctor_feature/screens/doctor_screen.dart';
+import 'package:doctorcall/features/firebase_reature/screens/firebase_screen.dart';
 import 'package:doctorcall/features/location_feature/screens/location_screens.dart';
 import 'package:doctorcall/features/login_feature/screens/login_screen.dart';
 import 'package:doctorcall/features/main_page_feature/screens/main_screen.dart';
@@ -61,6 +62,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       dynamic argData = settings.arguments;
       return MaterialPageRoute(
           builder: (context) => ShownotifScreen(
+            //data: argData,
+          ));
+    case Routes.FIREBASE_SCREEN:
+      dynamic argData = settings.arguments;
+      return MaterialPageRoute(
+          builder: (context) => FirebaseScreen(
             //data: argData,
           ));
 
